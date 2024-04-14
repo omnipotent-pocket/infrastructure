@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProperty scope="context" name="PROJECT_NAME" source="spring.application.name"/>
+    <conversionRule conversionWord="m" converterClass="com.infrastructure.log.converter.InfrastructureLogMsgJsonConverter" />
+    <conversionRule conversionWord="exception" converterClass="com.infrastructure.log.converter.InfrastructureExceptionConverter" />
+    <appender name="STDOUT_SKYWALKING" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+                <pattern>{"timestamp":"%d", "level":"%p", "projectName":"${PROJECT_NAME:-}", "grayVersion":"${eureka.instance.metadataMap.version}", "tid":"%tid", "scenarios":"%X{scenarios}", "stack":%exception ,"printMessage":%m,"messageData":%replace(%X{messageData:-FM_D_M_D}){'FM_D_M_D','{}'}}%n
+                </pattern>
+            </layout>
+        </encoder>
+    </appender>
+    <root level="info">
+        <appender-ref ref="STDOUT_SKYWALKING"/>
+    </root>
+</configuration>
