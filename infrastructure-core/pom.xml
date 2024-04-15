@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.infrastructure.pocket</groupId>
+        <groupId>com.infrastructure</groupId>
         <artifactId>infrastructure</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
@@ -10,7 +10,7 @@
     <artifactId>infrastructure-core</artifactId>
     <packaging>jar</packaging>
 
-    <name>infrastructure-pocket-core</name>
+    <name>infrastructure-core</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -23,7 +23,7 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.infrastructure.pocket</groupId>
+            <groupId>com.infrastructure</groupId>
             <artifactId>infrastructure-common</artifactId>
         </dependency>
     </dependencies>

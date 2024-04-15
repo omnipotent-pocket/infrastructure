@@ -21,13 +21,13 @@ public class InfrastructureEnvironmentPostProcessor implements EnvironmentPostPr
         //防止bootstrap加载，影响apollo初始化
         if (application.getWebApplicationType().equals(WebApplicationType.SERVLET)) {
 
-            String property = environment.getProperty("infra.pocket.config.type");
-            String enabled = environment.getProperty("infra.pocket.config.enabled");
+            String property = environment.getProperty("infra.config.type");
+            String enabled = environment.getProperty("infra.config.enabled");
             if(StrUtil.isEmpty(property) || !Boolean.valueOf(enabled)){
                 return;
             }
             if (StrUtil.isEmpty(property)) {
-                throw new IllegalArgumentException("infra.pocket.config.type is null");
+                throw new IllegalArgumentException("infra.config.type is null");
             }
             PropertiesPropertySource propertiesPropertySource;
             if("nacos".equals(property)){

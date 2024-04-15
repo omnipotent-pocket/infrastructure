@@ -10,8 +10,8 @@ public class LogConfig {
 
 
     @Bean
-    @ConditionalOnProperty(prefix = "infra.pocket.exception",name = "default", havingValue = "true",matchIfMissing = true)
-    public AbstractInfrastructureGlobalExceptionAop infraPocketGlobalExceptionAop() {
+    @ConditionalOnProperty(prefix = "infra.exception",name = "default", havingValue = "true",matchIfMissing = true)
+    public AbstractInfrastructureGlobalExceptionAop infrastructureGlobalExceptionAop() {
         return new AbstractInfrastructureGlobalExceptionAop.DefaultGlobalExceptionAutoAop();
     }
 }

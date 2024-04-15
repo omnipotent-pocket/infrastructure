@@ -11,11 +11,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>infrastructure</artifactId>
-    <groupId>com.infrastructure.pocket</groupId>
+    <groupId>com.infrastructure</groupId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>infrastructure-pocket</name>
+    <name>infrastructure</name>
 
     <modules>
 
@@ -32,7 +32,7 @@
 
     <properties>
         <spring.cloud>Greenwich.SR2</spring.cloud>
-        <infrastructure-pocket>1.0.0-SNAPSHOT</infrastructure-pocket>
+        <infrastructure>1.0.0-SNAPSHOT</infrastructure>
         <hutool>5.5.9</hutool>
         <lombok>1.18.20</lombok>
         <spring.cloud.alibaba>2.1.0.RELEASE</spring.cloud.alibaba>
@@ -64,29 +64,29 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>com.infrastructure.pocket</groupId>
+                <groupId>com.infrastructure</groupId>
                 <artifactId>infrastructure-core</artifactId>
-                <version>${infrastructure-pocket}</version>
+                <version>${infrastructure}</version>
             </dependency>
             <dependency>
-                <groupId>com.infrastructure.pocket</groupId>
+                <groupId>com.infrastructure</groupId>
                 <artifactId>infrastructure-endpoint</artifactId>
-                <version>${infrastructure-pocket}</version>
+                <version>${infrastructure}</version>
             </dependency>
             <dependency>
-                <groupId>com.infrastructure.pocket</groupId>
+                <groupId>com.infrastructure</groupId>
                 <artifactId>infrastructure-common</artifactId>
-                <version>${infrastructure-pocket}</version>
+                <version>${infrastructure}</version>
             </dependency>
             <dependency>
-                <groupId>com.infrastructure.pocket</groupId>
+                <groupId>com.infrastructure</groupId>
                 <artifactId>infrastructure-rpc</artifactId>
-                <version>${infrastructure-pocket}</version>
+                <version>${infrastructure}</version>
             </dependency>
             <dependency>
-                <groupId>com.infrastructure.pocket</groupId>
+                <groupId>com.infrastructure</groupId>
                 <artifactId>infrastructure-http</artifactId>
-                <version>${infrastructure-pocket}</version>
+                <version>${infrastructure}</version>
             </dependency>
             <dependency>
                 <groupId>cn.hutool</groupId>
