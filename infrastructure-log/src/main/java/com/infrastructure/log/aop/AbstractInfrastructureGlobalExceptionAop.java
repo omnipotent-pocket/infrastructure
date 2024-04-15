@@ -1,7 +1,7 @@
 package com.infrastructure.log.aop;
 
-import com.infrastructure.common.InfraPocketAbstractException;
-import com.infrastructure.common.InfrastructureAbsResponseEnum;
+import com.infrastructure.common.InfrastructureBaseException;
+import com.infrastructure.common.InfrastructureResponseEnum;
 import com.infrastructure.common.Result;
 import com.infrastructure.log.utils.PrintLogUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 
-public abstract class AbstractInfraPocketGlobalExceptionAop {
+public abstract class AbstractInfrastructureGlobalExceptionAop {
 
 
 
@@ -27,24 +27,13 @@ public abstract class AbstractInfraPocketGlobalExceptionAop {
             //打印info日志
             PrintLogUtil.printLog(request, proceedingJoinPoint, res, start);
         } catch (Exception e) {
-//            webErrorPublisher.errorNotify(request, e);
 //             业务异常
-            if (e instanceof InfraPocketAbstractException) {
-                res = Result.error(((InfraPocketAbstractException) e).getCode(), ((InfraPocketAbstractException) e).getMsg());
-                //打印info日志，不触发日志告警
+            if (e instanceof InfrastructureBaseException) {
+                res = Result.error(((InfrastructureBaseException) e).getCode(), ((InfrastructureBaseException) e).getMsg());
                 PrintLogUtil.printLog(request, proceedingJoinPoint, res, start);
             }
-            // sentinel限流异常
-//            else if (e instanceof UndeclaredThrowableException
-//                    && ((UndeclaredThrowableException) e).getUndeclaredThrowable() instanceof EdenSentinelException) {
-//                res = Result.error(EdenAbstractResponseEnum.RATE_LIMITER.getCode(), ((UndeclaredThrowableException) e).getUndeclaredThrowable().getMessage());
-//                //打印info日志，不触发日志告警
-//                printAopLog.printLog(request, proceedingJoinPoint, res, start);
-//            }
-            // 其他异常
             else {
-                res = Result.error(InfrastructureAbsResponseEnum.SYSTEM_ERROR.getCode(), InfrastructureAbsResponseEnum.SYSTEM_ERROR.getMsg());
-                //打印error日志，触发日志告警
+                res = Result.error(InfrastructureResponseEnum.SYSTEM_ERROR.getCode(), InfrastructureResponseEnum.SYSTEM_ERROR.getMsg());
                 PrintLogUtil.printError(request, proceedingJoinPoint, e, start);
             }
         }
@@ -52,7 +41,7 @@ public abstract class AbstractInfraPocketGlobalExceptionAop {
     }
 
     @Aspect
-    public static class DefaultGlobalExceptionAutoAop extends AbstractInfraPocketGlobalExceptionAop {
+    public static class DefaultGlobalExceptionAutoAop extends AbstractInfrastructureGlobalExceptionAop {
 
         @Around("@within(org.springframework.stereotype.Controller) || @within(org.springframework.web.bind.annotation.RestController)")
         public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {

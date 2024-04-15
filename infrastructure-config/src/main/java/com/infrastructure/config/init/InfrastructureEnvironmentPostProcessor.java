@@ -1,7 +1,7 @@
 package com.infrastructure.config.init;
 
 import cn.hutool.core.util.StrUtil;
-import com.infrastructure.config.AbstractInfraPocketEnvironment;
+import com.infrastructure.config.AbstractInfrastructureEnvironment;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.env.EnvironmentPostProcessor;
@@ -9,7 +9,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.PropertiesPropertySource;
 
-public class InfraPocketEnvironmentPostProcessor implements EnvironmentPostProcessor, Ordered {
+public class InfrastructureEnvironmentPostProcessor implements EnvironmentPostProcessor, Ordered {
 
     @Override
     public int getOrder() {
@@ -31,9 +31,9 @@ public class InfraPocketEnvironmentPostProcessor implements EnvironmentPostProce
             }
             PropertiesPropertySource propertiesPropertySource;
             if("nacos".equals(property)){
-                propertiesPropertySource = new PropertiesPropertySource("edenEnvironment", new AbstractInfraPocketEnvironment.InfraPocketNacosEnvironment().getProperties());
+                propertiesPropertySource = new PropertiesPropertySource("infraNacosEnvironment", new AbstractInfrastructureEnvironment.InfrastructureNacosEnvironment().getProperties());
             } else {
-                propertiesPropertySource = new PropertiesPropertySource("edenEnvironment", new AbstractInfraPocketEnvironment.InfraPocketApolloEnvironment().getProperties());
+                propertiesPropertySource = new PropertiesPropertySource("infraApolloEnvironment", new AbstractInfrastructureEnvironment.InfrastructureApolloEnvironment().getProperties());
             }
             environment.getPropertySources().addLast(propertiesPropertySource);
         }

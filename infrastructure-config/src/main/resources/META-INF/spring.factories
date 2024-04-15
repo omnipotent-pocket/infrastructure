@@ -1,2 +1,2 @@
 org.springframework.boot.env.EnvironmentPostProcessor=\
-  com.infrastructure.config.init.InfraPocketEnvironmentPostProcessor
+  com.infrastructure.config.init.InfrastructureEnvironmentPostProcessor

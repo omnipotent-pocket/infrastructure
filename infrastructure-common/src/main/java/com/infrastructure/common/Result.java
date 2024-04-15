@@ -27,11 +27,11 @@ public class Result<T> implements Serializable {
     }
 
     public static <T> Result<T> success(T data) {
-        return success(data, InfrastructureAbsResponseEnum.SUCCESS);
+        return success(data, InfrastructureResponseEnum.SUCCESS);
     }
 
     public static <T> Result<T> success() {
-        return success(null, InfrastructureAbsResponseEnum.SUCCESS);
+        return success(null, InfrastructureResponseEnum.SUCCESS);
     }
 
     public Result() {

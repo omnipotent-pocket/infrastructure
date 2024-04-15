@@ -11,19 +11,20 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Properties;
 
-import static com.infrastructure.config.AbstractInfraPocketEnvironment.EnvironmentEnum.*;
+import static com.infrastructure.config.AbstractInfrastructureEnvironment.EnvironmentEnum.*;
 
-public abstract class AbstractInfraPocketEnvironment {
-    //注入eden默认配置
+public abstract class AbstractInfrastructureEnvironment {
+
+    //注入默认配置
     private static Properties properties = new Properties();
     //当前环境
-    private static String env = StringUtils.isEmpty(System.getProperty("eden.environment")) ? LOCAL.code : System.getProperty("eden.environment");
+    private static String env = StringUtils.isEmpty(System.getProperty("infra.environment")) ? LOCAL.code : System.getProperty("infra.environment");
     //组件环境路劲
     private static String ENV_COMPONENT_PATH;
 
     private volatile  boolean started = false;
 
-    public AbstractInfraPocketEnvironment(){
+    public AbstractInfrastructureEnvironment(){
         if(properties.isEmpty()){
             init();
         }
@@ -35,7 +36,7 @@ public abstract class AbstractInfraPocketEnvironment {
             return;
         }
         PropertyMapper mapper = PropertyMapper.get();
-        mapper.from(System.getProperty("eden.environment")).when(p -> p == null || isAlias(p)).to(c -> System.setProperty("eden.environment", env = getByAlias(env).code));
+        mapper.from(System.getProperty("infra.environment")).when(p -> p == null || isAlias(p)).to(c -> System.setProperty("infra.environment", env = getByAlias(env).code));
 
 
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
@@ -90,14 +91,14 @@ public abstract class AbstractInfraPocketEnvironment {
         }
     }
 
-    public static class InfraPocketNacosEnvironment extends AbstractInfraPocketEnvironment{
+    public static class InfrastructureNacosEnvironment extends AbstractInfrastructureEnvironment {
 
         @Override
         protected String getEnvCommponentPath(String env) {
             return ENV_COMPONENT_PATH == null ? ENV_COMPONENT_PATH = "classpath*:env/" + env + "/nacos*.properties" : ENV_COMPONENT_PATH;
         }
     }
-    public static class InfraPocketApolloEnvironment extends AbstractInfraPocketEnvironment{
+    public static class InfrastructureApolloEnvironment extends AbstractInfrastructureEnvironment {
 
         @Override
         protected String getEnvCommponentPath(String env) {

@@ -3,7 +3,7 @@ package com.infrastructure.log.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.infrastructure.common.InfrastructureAbsResponseEnum;
+import com.infrastructure.common.InfrastructureResponseEnum;
 import com.infrastructure.common.Result;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -20,20 +20,13 @@ public class PrintLogUtil {
 
     public static void printLog(HttpServletRequest request, ProceedingJoinPoint proceedingJoinPoint, Object res, long start) {
         MethodSignature ms = (MethodSignature) proceedingJoinPoint.getSignature();
-        String printCode = InfrastructureAbsResponseEnum.SUCCESS.getCode();
-        String printMsg = InfrastructureAbsResponseEnum.SUCCESS.getMsg();
+        String printCode = InfrastructureResponseEnum.SUCCESS.getCode();
+        String printMsg = InfrastructureResponseEnum.SUCCESS.getMsg();
         Object printRes = res;
         if (res instanceof Result) {
             Result<?> ret = (Result<?>) res;
             printCode = ret.getStatusCode();
             printMsg = ret.getMessage();
-//            if (InfrastructureAbsResponseEnum.getCode().equals(ret.getStatusCode()) && notPrintEnable) {
-//                NotPrintRespBody annotation = ms.getMethod().getAnnotation(NotPrintRespBody.class);
-//                if (null != annotation
-//                        && Arrays.asList(annotation.env()).contains(System.getProperty("eden.environment"))) {
-//                    printRes = "ignore";
-//                }
-//            }
         } else if (res instanceof ResponseEntity) {
             printCode = ((ResponseEntity<?>) res).getStatusCode() + "";
             printMsg = ((ResponseEntity<?>) res).getBody().toString();
@@ -45,7 +38,7 @@ public class PrintLogUtil {
 
     public static void printError(HttpServletRequest request, ProceedingJoinPoint pjp, Exception e, long start) {
         MethodSignature ms = (MethodSignature) pjp.getSignature();
-        LogOutput.errorConvertJson(InfrastructureAbsResponseEnum.SYSTEM_ERROR.getCode(),
+        LogOutput.errorConvertJson(InfrastructureResponseEnum.SYSTEM_ERROR.getCode(),
                 ms.getName(), "请求响应异常日志", request, start, System.currentTimeMillis(), pjp.getArgs(), e);
     }
 

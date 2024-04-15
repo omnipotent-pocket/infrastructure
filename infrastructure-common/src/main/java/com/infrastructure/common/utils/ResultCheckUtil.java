@@ -2,8 +2,8 @@ package com.infrastructure.common.utils;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.infrastructure.common.InfraPocketAbstractException;
-import com.infrastructure.common.InfrastructureAbsResponseEnum;
+import com.infrastructure.common.InfrastructureBaseException;
+import com.infrastructure.common.InfrastructureResponseEnum;
 import com.infrastructure.common.PageResponse;
 import com.infrastructure.common.Result;
 
@@ -16,9 +16,9 @@ import java.util.Objects;
 public class ResultCheckUtil {
 
 
-    public static <T> Result checkResult(Result<T> result, InfrastructureAbsResponseEnum failResponse, String errCode){
+    public static <T> Result checkResult(Result<T> result, InfrastructureResponseEnum failResponse, String errCode){
         if(result == null){
-            throw new InfraPocketAbstractException(InfrastructureAbsResponseEnum.UNKNOWN_EXCEPTION);
+            throw new InfrastructureBaseException(InfrastructureResponseEnum.UNKNOWN_EXCEPTION);
         } else if (!result.isStatus()){
             if(Objects.equals(errCode,result.getStatusCode()) && failResponse != null){
                 return Result.error(failResponse);
@@ -62,9 +62,9 @@ public class ResultCheckUtil {
     }
 
 
-    public static <T> Result checkResult(Result<T> result, InfrastructureAbsResponseEnum failResponse){
+    public static <T> Result checkResult(Result<T> result, InfrastructureResponseEnum failResponse){
         if(result == null){
-            return Result.error(InfrastructureAbsResponseEnum.UNKNOWN_EXCEPTION);
+            return Result.error(InfrastructureResponseEnum.UNKNOWN_EXCEPTION);
         } else if (!result.isStatus()){
             return Result.error(result.getStatusCode(),result.getMessage());
         } else if (failResponse != null){
@@ -87,9 +87,9 @@ public class ResultCheckUtil {
         return checkResultPage(result,null);
     }
 
-    public static <T> Result checkResultPage(Result<PageResponse<T>> result, InfrastructureAbsResponseEnum failResponse){
+    public static <T> Result checkResultPage(Result<PageResponse<T>> result, InfrastructureResponseEnum failResponse){
         if(result == null){
-            return Result.error(InfrastructureAbsResponseEnum.UNKNOWN_EXCEPTION);
+            return Result.error(InfrastructureResponseEnum.UNKNOWN_EXCEPTION);
         } else if (!result.isStatus()){
             return Result.error(result.getStatusCode(),result.getMessage());
         } else if (failResponse != null && (result.getResult() == null || CollUtil.isEmpty(result.getResult().getResult()))){
@@ -99,9 +99,9 @@ public class ResultCheckUtil {
         return null;
     }
 
-    public static <T> Result checkResultPage(Result<PageResponse<T>> result, InfrastructureAbsResponseEnum failResponse, String errCode){
+    public static <T> Result checkResultPage(Result<PageResponse<T>> result, InfrastructureResponseEnum failResponse, String errCode){
         if(result == null){
-            return Result.error(InfrastructureAbsResponseEnum.UNKNOWN_EXCEPTION);
+            return Result.error(InfrastructureResponseEnum.UNKNOWN_EXCEPTION);
         } else if (!result.isStatus()){
             if(Objects.equals(errCode,result.getStatusCode()) && failResponse != null){
                 //因为1.0.0版本有个bug，参数设置反了
