@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.infrastructure</groupId>
         <artifactId>infrastructure</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0.RELEASE</version>
     </parent>
     <artifactId>infrastructure-role-flow</artifactId>
     <name>Archetype - infrastructure-role-flow</name>
