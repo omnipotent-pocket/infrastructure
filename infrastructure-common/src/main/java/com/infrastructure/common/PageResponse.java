@@ -1,8 +1,14 @@
 package com.infrastructure.common;
 
-import java.util.Collection;
+import lombok.Data;
 
-public interface PageResponse<T> {
+import java.util.ArrayList;
+import java.util.List;
 
-    Collection<T> getResult();
+@Data
+public class PageResponse<T> {
+
+    public List<T> result = new ArrayList();
+
+    private Long totalRows=0L;
 }

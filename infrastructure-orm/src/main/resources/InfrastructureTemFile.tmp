@@ -1,0 +1,132 @@
+package com.[packagePath].[project].service.controller.[dbShortName];
+
+import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.infrastructure.common.InfrastructureResponseEnum;
+import com.infrastructure.common.PageResponse;
+import com.infrastructure.common.Result;
+import com.[packagePath].[project].dal.entity.[dbShortName].[TbCamel];
+import com.[packagePath].[project].dal.service.[dbShortName].I[TbCamel]Service;
+import com.[packagePath].[project].facade.domain.request.[dbShortName].[tbShort].*;
+import com.[packagePath].[project].facade.domain.response.[dbShortName].[tbShort].*;
+import com.[packagePath].[project].facade.service.[dbShortName].IRpc[TbCamel]Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RestController
+public class [TbCamel]Controller implements IRpc[TbCamel]Service {
+
+    @Autowired
+    private I[TbCamel]Service [tbCamel]Service;
+
+    @Override
+    public Result<PageResponse<[TbCamel]QueryRpcVO>> page([TbCamel]QueryRpcDTO dto) {
+        PageResponse<[TbCamel]QueryRpcVO> resPage = new PageResponse<>();
+
+        IPage<[TbCamel]> page = new Page<>(dto.getPageNum(), dto.getPageSize());
+        LambdaQueryWrapper<[TbCamel]> wrapper = new LambdaQueryWrapper<>();
+        if (dto.getId() != null) {
+            wrapper.eq([TbCamel]::getId, dto.getId());
+        }
+
+        page = [tbCamel]Service.page(page, wrapper);
+        if (!CollectionUtils.isEmpty(page.getRecords())) {
+            resPage.setList(page.getRecords().stream().map(t -> {
+                [TbCamel]QueryRpcVO vo = new [TbCamel]QueryRpcVO();
+                BeanUtil.copyProperties(t, vo);
+                return vo;
+            }).collect(Collectors.toList()));
+        }
+        resPage.setTotalRows(page.getTotal());
+        return Result.success(resPage);
+    }
+
+    @Override
+    public Result<List<[TbCamel]QueryRpcVO>> query([TbCamel]QueryRpcDTO dto) {
+        List<[TbCamel]QueryRpcVO> resList = new ArrayList<>();
+
+        LambdaQueryWrapper<[TbCamel]> wrapper = new LambdaQueryWrapper<>();
+        if (dto.getId() != null) {
+            wrapper.eq([TbCamel]::getId, dto.getId());
+        }
+
+        List<[TbCamel]> list = [tbCamel]Service.list(wrapper);
+        if (!CollectionUtils.isEmpty(list)) {
+            resList = list.stream().map(t -> {
+                [TbCamel]QueryRpcVO vo = new [TbCamel]QueryRpcVO();
+                BeanUtil.copyProperties(t, vo);
+                return vo;
+            }).collect(Collectors.toList());
+        }
+        return Result.success(resList);
+    }
+
+    @Override
+    public Result<[TbCamel]QueryRpcVO> queryById(Integer id) {
+        [TbCamel]QueryRpcVO res = new [TbCamel]QueryRpcVO();
+        [TbCamel] record = [tbCamel]Service.getById(id);
+
+        if (record == null) {
+           return Result.success();
+        }
+        BeanUtil.copyProperties(record, res);
+        return Result.success(res);
+    }
+
+    @Override
+    public Result<Void> insert([TbCamel]InsertRpcDTO dto) {
+        [TbCamel] record = new [TbCamel]();
+        BeanUtil.copyProperties(dto, record);
+        boolean flag = [tbCamel]Service.save(record);
+
+
+        return Result.success(flag);
+    }
+
+    @Override
+    public Result<Boolean> batchInsert(List<[TbCamel]InsertRpcDTO> listDto) {
+        List<[TbCamel]> recordList = listDto.stream().map(t -> {
+            [TbCamel] record = new [TbCamel]();
+            BeanUtil.copyProperties(t, record);
+            return record;
+        }).collect(Collectors.toList());
+        boolean flag = [tbCamel]Service.saveBatch(recordList);
+
+        return Result.success(flag);
+    }
+
+    @Override
+    public Result<Boolean> update([TbCamel]UpdateRpcDTO dto) {
+        [TbCamel]UpdateEntityRpcDTO upd = dto.getEntity();
+        [TbCamel]UpdateConditionRpcDTO condition = dto.getCondition();
+
+        [TbCamel] updEntity = new [TbCamel]();
+        BeanUtil.copyProperties(upd, updEntity);
+
+        LambdaQueryWrapper<[TbCamel]> wrapper = new LambdaQueryWrapper<>();
+        if (condition.getId() != null) {
+            wrapper.eq([TbCamel]::getId, condition.getId());
+        }
+        boolean flag = [tbCamel]Service.update(updEntity, wrapper);
+
+        return Result.success(flag);
+    }
+
+    @Override
+    public Result<Boolean> delete([TbCamel]DeleteRpcDTO dto) {
+        LambdaQueryWrapper<[TbCamel]> wrapper = new LambdaQueryWrapper<>();
+        if (dto.getId() != null) {
+            wrapper.eq([TbCamel]::getId, dto.getId());
+        }
+
+        boolean flag = [tbCamel]Service.remove(wrapper);
+        return Result.success(flag);
+    }
+}
