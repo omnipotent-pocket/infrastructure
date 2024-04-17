@@ -7,8 +7,6 @@
         <version>1.0.0.RELEASE</version>
     </parent>
     <artifactId>infrastructure-orm</artifactId>
-    <name>Archetype - infrastructure-orm</name>
-    <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
             <groupId>com.infrastructure</groupId>

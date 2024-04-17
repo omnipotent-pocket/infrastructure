@@ -7,8 +7,6 @@
         <version>1.0.0.RELEASE</version>
     </parent>
     <artifactId>infrastructure-common</artifactId>
-    <name>Archetype - infrastructure-common</name>
-    <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
